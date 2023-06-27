@@ -4,13 +4,14 @@
 Copy the repositories you want to herd into this directory. 
 
 ## Commands
-- `make` - lists the repositories
-- `make status` 
-- `make branch`
-- `make pull`
-- `make compile`
-- `make test`
-- `make create-branch` creates a branch and pushes to github, branch name currently hard coded
+- `make` - list the repositories
+- `make ignore` - generate a .gitignore file 
+- `make status` - list git status
+- `make branch` - list git branch
+- `make pull` - pull from origin 
+- `make compile` - mvn clean install -DskipTests
+- `make test` - mvn clean install
+- `make create-branch` - creates a branch and pushes to github, branch name currently hard coded
 
 This repository contains a `make` for Git bash on Windows.
 

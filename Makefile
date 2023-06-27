@@ -12,6 +12,14 @@ JAVA_REPOSITORIES:=$(shell /usr/bin/ls -1 -d */ | sed 's:\/::' )
 all:
 	echo $(JAVA_REPOSITORIES)
 
+.PHONY: ignore
+ignore:  ignore_idea $(addsuffix +ignore,$(JAVA_REPOSITORIES))
+ignore_idea:
+	echo  .idea/ >> .gitignore
+%+ignore: %/.git
+	echo  $*/ >> .gitignore
+
+
 .PHONY: pull
 ## Pulls all repositories.
 # The list of repositories is in the file repositories.
@@ -61,7 +69,7 @@ create-branch: $(addsuffix +create_branch,$(JAVA_REPOSITORIES))
 %/: %/.git
 
 %/.git:
-	git clone -q git@github.com:$(GITHUB_USER)/$*.git
+	git clone  git@github.com:$(GITHUB_USER)/$*.git
 
 
 .PHONY: compile

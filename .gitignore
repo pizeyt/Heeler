@@ -1,0 +1,10 @@
+.idea/
+vtw-apps/
+vtw-delivery-app/
+vtw-delivery-client/
+vtw-kews/
+vtw-lov/
+vtw-rights-permission/
+vtw-sdk/
+vtw-service-metadata/
+vtw-service-template/
