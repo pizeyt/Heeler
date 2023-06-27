@@ -79,7 +79,7 @@ compile: $(addsuffix +compile,$(JAVA_REPOSITORIES))
 
 %+compile: %/.git
 	cd $*
-	mvn -DskipTests clean install | (grep -v '\[INFO\]' || true)
+	mvn -DskipTests clean install | (grep -v '\[INFO\]\|Download' || true)
 
 .PHONY: test
 ## Runs mvn clean install in all repositories.
