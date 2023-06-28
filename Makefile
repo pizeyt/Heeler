@@ -12,6 +12,17 @@ JAVA_REPOSITORIES:=$(shell /usr/bin/ls -1 -d */ | sed 's:\/::' )
 all:
 	echo $(JAVA_REPOSITORIES)
 
+.PHONY: commit
+commit:  $(addsuffix +commit,$(JAVA_REPOSITORIES))
+%+commit: %/.git
+ifdef message
+	cd $*
+	# there may be nothing to commit, or other errors, but continue
+	git commit -m "$(message)" -a || true
+else
+	@echo 'Error: no commit message. Usage: make commit message="Commit message"'
+endif
+
 .PHONY: ignore
 ignore:  ignore_idea $(addsuffix +ignore,$(JAVA_REPOSITORIES))
 ignore_idea:
@@ -25,12 +36,10 @@ ignore_idea:
 # The list of repositories is in the file repositories.
 # If a repository isn't cloned yet, it will be cloned first.
 pull: $(addsuffix +pull,$(JAVA_REPOSITORIES))
-
 ## Pulls a specific repository.
 # Example: make core+pull
 %+pull: %/.git
 	cd $*
-	git checkout $(UPSTREAM_MASTER_BRANCH)
 	git pull origin $(UPSTREAM_MASTER_BRANCH)
 
 .PHONY: status
