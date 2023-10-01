@@ -12,6 +12,8 @@ Copy the repositories you want to herd into this directory.
 - `make commit message="Commit message"` - commit changes to current branch
 - `make compile` - mvn clean install -DskipTests
 - `make test` - mvn clean install
+- `make revert` - Reverse uncommited changes
+- `make pom-edit edit=s/17.11.4/17.11.5/g branch=new_branch` Edit and push
 - `make create-branch` - creates a branch and pushes to github, branch name currently hard coded
 
 This repository contains a `make` for Git bash on Windows.
