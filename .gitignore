@@ -8,3 +8,6 @@ vtw-rights-permission/
 vtw-sdk/
 vtw-service-metadata/
 vtw-service-template/
+vtw-events-router/
+vtw-inner-ws/
+vtw-web/
