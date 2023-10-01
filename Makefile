@@ -68,11 +68,34 @@ branch: $(addsuffix +branch,$(JAVA_REPOSITORIES))
 create-branch: $(addsuffix +create_branch,$(JAVA_REPOSITORIES))
 
 ## Branch information about a specific repository.
-# Example: make vtw-core+branch
+# Example: make vtw-core+branch branch=new_branch
 %+create_branch: %/.git
 	cd $*
-	echo "$*/`git checkout -b new_branch`"
-	echo "$*/`git push origin new_branch`"
+	git checkout -b $(branch)
+
+.PHONY: revert
+revert: $(addsuffix +revert,$(JAVA_REPOSITORIES))
+%+revert: %/.git
+	cd $*
+	git status  --porcelain |sed 's/^ M //' |xargs git checkout --
+
+.PHONY: pom-edit
+# Example: make pom-edit edit=s/17.11.4/17.11.5/g branch=new_branch
+pom-edit: $(addsuffix +pom-edit,$(JAVA_REPOSITORIES))
+%+pom-edit: %/.git
+ifdef edit
+	cd $*
+	git branch -d $(branch)
+	git checkout -b $(branch)
+#	find * -name pom.xml | \
+#	grep -v target | \
+#	xargs sed -b --in-place  '$(edit)'
+#	git commit -m "pom edit $(edit)" -a
+	git push origin $(branch)
+else
+	@echo 'Error: no edit. Usage: make pom-edit edit=s/17.11.4/17.11.5/g'
+endif
+
 
 
 %/: %/.git
