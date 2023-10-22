@@ -82,15 +82,15 @@ revert: $(addsuffix +revert,$(JAVA_REPOSITORIES))
 .PHONY: pom-edit
 # Example: make pom-edit edit=s/17.11.4/17.11.5/g branch=new_branch
 pom-edit: $(addsuffix +pom-edit,$(JAVA_REPOSITORIES))
+
 %+pom-edit: %/.git
 ifdef edit
 	cd $*
-	git branch -d $(branch)
 	git checkout -b $(branch)
 	find * -name pom.xml | \
 	grep -v target | \
 	xargs sed -b --in-place  '$(edit)'
-	git commit -m "pom edit $(edit)" -a
+	git commit -m "pom edit $(edit)" -a || git checkout $(UPSTREAM_MASTER_BRANCH)
 #	git push origin $(branch)
 else
 	@echo 'Error: no edit. Usage: make pom-edit edit=s/17.11.4/17.11.5/g'
